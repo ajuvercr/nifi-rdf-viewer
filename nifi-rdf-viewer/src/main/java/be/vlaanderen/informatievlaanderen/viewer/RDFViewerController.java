@@ -43,20 +43,6 @@ public class RDFViewerController extends HttpServlet {
             RDFFormat.TURTLE, RDFFormat.NTRIPLES, RDFFormat.N3, RDFFormat.JSONLD
     );
 
-    private static String codemirror = "";
-
-    static {
-
-        RDFViewerController.class.getResource("codemirror.all.js");
-        InputStream s = RDFViewerController.class.getResourceAsStream("codemirror.all.js");
-        try {
-            if (s != null)
-                codemirror = new String(s.readAllBytes(), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private static final Set<String> supportedMimeTypes = new HashSet<>();
 
     static {
@@ -95,7 +81,6 @@ public class RDFViewerController extends HttpServlet {
 
             request.setAttribute("mode", contentType);
             request.setAttribute("content", formatted);
-            request.setAttribute("codemirror", codemirror);
             request.getRequestDispatcher("/WEB-INF/jsp/codemirror.jsp").include(request, response);
         } else {
             final PrintWriter out = response.getWriter();
